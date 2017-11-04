@@ -5,7 +5,7 @@ const initialState = {
 
 export default function ImagesReducer(state = initialState, action) {
   switch (action.type) {
-    case 'STARTED_LOADING_IMAGES':
+    case 'START_LOADING_IMAGES':
       return {
         ...state,
         isLoading: true
