@@ -1,0 +1,14 @@
+$imageWidth: 450px;
+$imageHeight: 400px;
+
+.images-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 10px;
+
+  &__image {
+    width: $imageWidth;
+    height: $imageHeight;
+  }
+}

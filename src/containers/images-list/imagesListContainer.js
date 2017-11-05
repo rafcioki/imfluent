@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ImagesList from '../components/imagesList'
+import ImagesList from '../../components/images-list/imagesList'
 
 const mapStateToProps = (state) => {
   return {

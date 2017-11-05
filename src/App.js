@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import SearchBar from './containers/SearchBar';
-import ImagesListContainer from './containers/imagesListContainer';
+import SearchBar from './stateful-components/search-bar/SearchBar';
+import ImagesListContainer from './containers/images-list/imagesListContainer';
 
 class App extends Component {
   render() {

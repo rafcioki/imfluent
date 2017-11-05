@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchImages } from '../logic/search/actions';
+import { fetchImages } from '../../logic/search/actions';
 
 const mapDispatchToProps = (dispatch) => {
   return {
