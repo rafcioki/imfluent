@@ -1,9 +1,10 @@
 import { delay } from 'redux-saga';
-import { put, takeEvery } from 'redux-saga/effects';
+import { put, takeEvery, call } from 'redux-saga/effects';
+import api from 'reddit-images-api';
 
-export function* fetchImages() {
-  yield delay(2000);
-  yield put({ type: 'RECEIVED_IMAGES', images: ['https://i.ytimg.com/vi/URrngesxRa8/maxresdefault.jpg'] })
+function* fetchImages(action) {
+  const images = yield call(api, action.subreddit);
+  yield put({ type: 'RECEIVED_IMAGES', images });
 }
 
 export default function* watchFetchImages() {

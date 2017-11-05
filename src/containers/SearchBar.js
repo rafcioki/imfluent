@@ -21,7 +21,7 @@ class SearchBar extends Component {
   }
 
   onSearchClicked() {
-    this.props.getImages(fetchImages(this.state.searchText));
+    this.props.getImages(this.state.searchText);
 
     this.setState({
       searchText: ''
