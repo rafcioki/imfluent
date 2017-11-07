@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import SearchBar from './stateful-components/search-bar/SearchBar';
-import ImagesListContainer from './containers/images-list/imagesListContainer';
+import GalleryContainer from './containers/gallery/galleryContainer';
 
 class App extends Component {
   render() {
     return (
       <div>
         <SearchBar />
-        <ImagesListContainer />
+        <GalleryContainer />
       </div>
     );
   }

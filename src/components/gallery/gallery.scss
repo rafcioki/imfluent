@@ -1,0 +1,39 @@
+$imageWidth: 450px;
+$imageHeight: 400px;
+
+.gallery {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+ 
+  &__images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  &__image {
+    width: $imageWidth;
+    height: $imageHeight;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  &__pinned-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(lightblue, 0.8);
+
+    &__image {
+      width: auto;
+      max-width: 75vmax;
+      max-height: 45vmax;
+    }
+  }
+}

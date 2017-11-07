@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchImages } from '../../logic/search/actions';
+import { fetchImages } from '../../logic/imagesLoading/imagesLoadingActions';
+import './searchBar.css';
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -13,14 +14,16 @@ class SearchBar extends Component {
     super(props);
 
     this.state = {
-      searchText: ''
+      searchText: 'pics'
     };
 
-    this.onSearchClicked = this.onSearchClicked.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.onInputChanged = this.onInputChanged.bind(this);
   }
 
-  onSearchClicked() {
+  onSubmit(e) {
+    e.preventDefault();
+
     this.props.getImages(this.state.searchText);
 
     this.setState({
@@ -36,10 +39,10 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <div>
+      <form className="search-box" onSubmit={this.onSubmit}>
         <input type="text" value={this.state.searchText} onChange={this.onInputChanged} placeholder="Enter subreddit name" />
-        <button onClick={this.onSearchClicked}>Search</button>
-      </div>
+        <button className="search-box__search-button" type="submit">Search</button>
+      </form>
     );
   }
 }
