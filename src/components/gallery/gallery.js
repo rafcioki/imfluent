@@ -1,6 +1,11 @@
 import React from 'react';
 import styles from './gallery.css';
 
+function handleImageClicked(event, props, imageUrl) {
+  props.imageClicked(imageUrl);
+  event.preventDefault();
+}
+
 const renderLoadingIndicator = () => {
   return 'Currently loading!';
 }
@@ -8,8 +13,10 @@ const renderLoadingIndicator = () => {
 const renderImages = (props) => {
   return <div className='gallery__images'>
    {
-      props.images.map(imageUrl => {
-        return <img src={imageUrl} onClick={() => props.imageClicked(imageUrl)} className='gallery__image' />
+      props.posts.map(post => {
+        return <a className="gallery__image" href={post.imageUrl} onClick={(e) => handleImageClicked(e, props, post.imageUrl)}>
+          <img className="gallery__image" src={post.imageUrl} />
+        </a>
       }) 
     }
   </div>
@@ -17,7 +24,7 @@ const renderImages = (props) => {
 
 const renderPinnedImage = (props) => {
   return props.isImagePinned && 
-  <div className='gallery__pinned-image'>
+  <div className='gallery__pinned-image' onClick={props.imageClosed}>
     <img src={props.pinnedImageUrl} className='gallery__pinned-image__image' />
   </div>;
 }

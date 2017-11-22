@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import Gallery from '../../components/gallery/gallery'
-import { imageClicked } from '../../logic/gallery/galleryActions';
+import { imageClicked, imageClosed } from '../../logic/gallery/galleryActions';
 
 const mapStateToProps = (state) => {
   return {
-    images: state.images.images,
+    posts: state.images.images,
     isLoading: state.images.isLoading,
     isImagePinned: state.gallery.isImagePinned,
     pinnedImageUrl: state.gallery.pinnedImageUrl
@@ -13,7 +13,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    imageClicked: (imageUrl) => dispatch(imageClicked(imageUrl))
+    imageClicked: (imageUrl) => dispatch(imageClicked(imageUrl)),
+    imageClosed: () => dispatch(imageClosed())
   }
 }
 

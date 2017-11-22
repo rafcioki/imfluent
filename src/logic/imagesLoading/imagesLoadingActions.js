@@ -5,10 +5,16 @@ export const imagesReceived = (images) => {
   };
 }
 
-export function fetchImages(subreddit) {
+export function fetchImages(subreddit, lastLoadedImageId) {
   return {
     type: 'START_LOADING_IMAGES',
     subreddit
+  }
+}
+
+export function fetchMoreImages() {
+  return {
+    type: 'LOAD_MORE_IMAGES'
   }
 }
 

@@ -1,12 +1,35 @@
 import { delay } from 'redux-saga';
-import { put, takeEvery, call } from 'redux-saga/effects';
-import api from 'reddit-images-api';
+import { put, takeLatest, call, select } from 'redux-saga/effects';
+import { getPosts } from 'reddit-images-api';
 
 function* fetchImages(action) {
-  const images = yield call(api, action.subreddit);
-  yield put({ type: 'RECEIVED_IMAGES', images });
+  const response = yield call(getPosts, action.subreddit);
+  
+  yield put({
+    type: 'RECEIVED_IMAGES',
+    images: response.posts,
+    lastPostId: response.lastPostId,
+    nextCount: response.nextCount
+  });
 }
 
-export default function* watchFetchImages() {
-  yield takeEvery('START_LOADING_IMAGES', fetchImages);
+function* fetchMoreImages(action) {
+  const state = yield select();
+
+  const response = yield call(getPosts, state.images.subreddit, state.images.lastPostId, state.nextCount);
+
+  yield put({
+    type: 'RECEIVED_IMAGES',
+    images: response.posts,
+    lastPostId: response.lastPostId,
+    nextCount: response.nextCount
+  });
+}
+
+export function* watchFetchImages() {
+  yield takeLatest('START_LOADING_IMAGES', fetchImages);
+}
+
+export function* watchFetchMoreImages() {
+  yield takeLatest('LOAD_MORE_IMAGES', fetchMoreImages);
 }

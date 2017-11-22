@@ -9,10 +9,11 @@ $imageHeight: 400px;
   &__images {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
   }
 
   &__image {
+    display: block;
     width: $imageWidth;
     height: $imageHeight;
     margin-bottom: 10px;

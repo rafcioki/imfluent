@@ -1,6 +1,7 @@
 const initialState = {
   isLoading: false,
-  images: []
+  images: [],
+  subreddit: null
 }
 
 export default function ImagesReducer(state = initialState, action) {
@@ -8,14 +9,22 @@ export default function ImagesReducer(state = initialState, action) {
     case 'START_LOADING_IMAGES':
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
+        subreddit: action.subreddit
       };
 
     case 'RECEIVED_IMAGES':
       return {
         ...state,
         isLoading: false,
-        images: action.images
+        images: [...state.images, ...action.images],
+        lastPostId: action.lastPostId,
+        nextCount: action.nextCount
+      }
+
+    case 'LOAD_MORE_IMAGES':
+      return {
+        ...state
       }
 
     default:
