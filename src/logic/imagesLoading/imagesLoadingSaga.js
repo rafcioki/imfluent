@@ -1,9 +1,11 @@
-import { delay } from 'redux-saga';
 import { put, takeLatest, call, select } from 'redux-saga/effects';
 import { getPosts } from 'reddit-images-api';
+import { fetchImages } from './imagesLoadingActions';
 
-function* fetchImages(action) {
-  const response = yield call(getPosts, action.subreddit);
+function* loadImages(action) {
+  const state = yield select()
+  
+  const response = yield call(getPosts, state.images.subreddit, state.images.from, state.images.orderBy)
   
   yield put({
     type: 'RECEIVED_IMAGES',
@@ -13,10 +15,10 @@ function* fetchImages(action) {
   });
 }
 
-function* fetchMoreImages(action) {
+function* loadMoreImages(action) {
   const state = yield select();
 
-  const response = yield call(getPosts, state.images.subreddit, state.images.lastPostId, state.nextCount);
+  const response = yield call(getPosts, state.images.subreddit, state.images.from, state.images.orderBy, state.images.lastPostId, state.nextCount);
 
   yield put({
     type: 'RECEIVED_IMAGES',
@@ -26,10 +28,26 @@ function* fetchMoreImages(action) {
   });
 }
 
+function* triggerNewSearchIfImagesAreAlreadyLoaded(action) {
+  const state = yield select()
+
+  if (state.images.images.length > 0) {
+    yield put(fetchImages())
+  }
+}
+
 export function* watchFetchImages() {
-  yield takeLatest('START_LOADING_IMAGES', fetchImages);
+  yield takeLatest('START_LOADING_IMAGES', loadImages);
 }
 
 export function* watchFetchMoreImages() {
-  yield takeLatest('LOAD_MORE_IMAGES', fetchMoreImages);
+  yield takeLatest('LOAD_MORE_IMAGES', loadMoreImages);
+}
+
+export function* watchOrderByFilterSet() {
+  yield takeLatest('SET_ORDERBY_FILTER', triggerNewSearchIfImagesAreAlreadyLoaded)
+}
+
+export function* watchFromFilterSet() {
+  yield takeLatest('SET_FROM_FILTER', triggerNewSearchIfImagesAreAlreadyLoaded);
 }

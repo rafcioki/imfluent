@@ -1,8 +1,25 @@
-.search-box {
+.search-bar {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+
+  &__search-box {
+    display: flex;
+    justify-content: center;
+  }
 
   &__search-button {
     margin-left: 5px;
   }
+
+  &__options {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__order-by {
+    margin-right: 5px;
+  }
 }
+
