@@ -14,9 +14,15 @@ const renderImages = (props) => {
   return <div className='gallery__images'>
    {
       props.posts.map(post => {
-        return <a className="gallery__image" href={post.imageUrl} onClick={(e) => handleImageClicked(e, props, post.imageUrl)}>
-          <img className="gallery__image" src={post.imageUrl} />
-        </a>
+        return <div className="gallery__image-box">
+          <a href={post.imageUrl} onClick={(e) => handleImageClicked(e, props, post.imageUrl)}>
+            <img className="gallery__image-box__picture" src={post.imageUrl} />
+            <div className="gallery__image-box__caption">
+              <span>[{post.score}]</span>
+              {post.title}
+            </div>
+          </a>
+        </div>
       }) 
     }
   </div>
