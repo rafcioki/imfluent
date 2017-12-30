@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import FontAwesome from 'react-fontawesome';
 import { fetchImages, setOrderByFilter, setFromFilter, setSearchTerm } from '../../logic/imagesLoading/imagesLoadingActions';
 import './searchBar.css';
 
@@ -16,6 +17,8 @@ const mapStateToProps = (state) => {
   return {
     orderBy: state.images.orderBy,
     from: state.images.from,
+    images: state.images.images,
+    isLoading: state.images.isLoading,
   }
 }
 
@@ -35,13 +38,15 @@ class SearchBar extends Component {
         'month',
         'week',
         'day'
-      ]
+      ],
+      isCollapsed: false
     };
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onInputChanged = this.onInputChanged.bind(this);
     this.onSortByChange = this.onSortByChange.bind(this);
     this.onFromChange = this.onFromChange.bind(this);
+    this.onCollapseMenuButtonClick = this.onCollapseMenuButtonClick.bind(this);
   }
 
   onSubmit(e) {
@@ -70,42 +75,66 @@ class SearchBar extends Component {
     this.props.setFromFilter(e.target.value)
   }
 
+  onCollapseMenuButtonClick() {
+    this.setState(prevState => {
+      return {
+        isCollapsed: !prevState.isCollapsed
+      }
+    })
+  }
+
+  emptyAndNotLoading() {
+    return this.props.images.length === 0 && !this.props.loading
+  }
+
+  getCollapseArrowDirection() {
+    return this.state.isCollapsed ? 'down' : 'up'
+  }
+
   render() {
     return (
-      <div className="search-bar">
-          <form className="search-bar__search-box" onSubmit={this.onSubmit}>
-            <input type="text" value={this.state.searchText} onChange={this.onInputChanged} placeholder="Enter subreddit name" />
-            <button className="search-bar__search-button" type="submit">Search</button>
-          </form>
-
-          
-          <div className="search-bar__options">
-            {/* todo: consider moving these into separate components */}
-            <span className="search-bar__order-by">Order by:</span>
-            <select onChange={this.onSortByChange}>
-              { 
-                this.state.sortByOptions.map(option => {
-                  return <option value={option}>{ option }</option>
-                })
-              }
-            </select>
+      <div className={`search-bar${this.emptyAndNotLoading() ? '' : '--fixed'}`}>
+       {
+         !this.state.isCollapsed &&
+          <div>
+            <form className="search-bar__search-box" onSubmit={this.onSubmit}>
+              <input className="search-bar__search-box__text" type="text" value={this.state.searchText} onChange={this.onInputChanged} placeholder="Enter subreddit name" />
+              <button className="search-bar__search-button" type="submit">Search</button>
+            </form>
+            
+            <SortingOptions title="Order by" onChangeCallback={this.onSortByChange} options={this.state.sortByOptions} />
+            
+            { this.props.orderBy === 'top' &&
+              <SortingOptions title="From" onChangeCallback={this.onFromChange} options={this.state.fromOptions} />
+            }
           </div>
+       }
+
+        {
+          this.props.images.length > 0 &&
+          <div className="search-bar__collapse-menu-button" onClick={this.onCollapseMenuButtonClick}>
+            <FontAwesome name={`arrow-${this.getCollapseArrowDirection()}`} className="search-bar__collapse-menu-button__button" />
+          </div>
+        }
           
-          { this.props.orderBy === 'top' &&
-            <div className="search-bar__options">
-              <span className="search-bar__order-by">From:</span>
-              <select onChange={this.onFromChange}>
-                { 
-                  this.state.fromOptions.map(option => {
-                    return <option value={option}>{ option }</option>
-                  })
-                }
-              </select>
-            </div>
-          }
       </div>
     );
   }
+}
+
+const SortingOptions = ({title, onChangeCallback, options}) => {
+  return (
+    <div className="search-bar__options">
+      <span className="search-bar__order-by">{title}:</span>
+      <select onChange={onChangeCallback}>
+        { 
+          options.map(option => {
+            return <option value={option}>{ option }</option>
+          })
+        }
+      </select>
+    </div>
+  )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
