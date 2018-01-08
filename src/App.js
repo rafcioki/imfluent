@@ -7,13 +7,11 @@ import './app.css';
 
 class App extends Component {
   render() {
-    return (
-      <div>
-        <SearchBar />
-        <GalleryContainer />
-        <Scroller />
-      </div>
-    );
+    return [
+        <SearchBar />,
+        <GalleryContainer />,
+        <Scroller />,
+      ];
   }
 }
 

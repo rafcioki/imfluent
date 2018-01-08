@@ -83,17 +83,18 @@ class SearchBar extends Component {
     })
   }
 
-  emptyAndNotLoading() {
-    return this.props.images.length === 0 && !this.props.loading
-  }
-
   getCollapseArrowDirection() {
     return this.state.isCollapsed ? 'down' : 'up'
   }
 
+  galleryIsEmpty() {
+    return this.props.images.length === 0;
+  }
+
   render() {
     return (
-      <div className={`search-bar${this.emptyAndNotLoading() ? '' : '--fixed'}`}>
+      !this.props.isLoading &&
+      <div className={`search-bar${this.galleryIsEmpty() ? '' : '--fixed'}`}>
        {
          !this.state.isCollapsed &&
           <div>
@@ -111,7 +112,7 @@ class SearchBar extends Component {
        }
 
         {
-          this.props.images.length > 0 &&
+          !this.galleryIsEmpty() &&
           <div className="search-bar__collapse-menu-button" onClick={this.onCollapseMenuButtonClick}>
             <FontAwesome name={`arrow-${this.getCollapseArrowDirection()}`} className="search-bar__collapse-menu-button__button" />
           </div>

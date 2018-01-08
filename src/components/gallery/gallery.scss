@@ -64,4 +64,20 @@ $imageHeight: 400px;
       max-height: 45vmax;
     }
   }
+
+  &__loading-indicator {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__spinner {
+      position: absolute;
+      top: 50%;
+      font-size: 3em;
+      width: auto;
+    }
+  }
 }
