@@ -7,6 +7,12 @@ function handleImageClicked(event, props, imageUrl) {
   event.preventDefault();
 }
 
+function handleExternalLinkClicked(event, permalink) {
+  window.open('https://reddit.com' + permalink, '_blank')
+  event.preventDefault()
+  event.stopPropagation()
+}
+
 const renderLoadingIndicator = () => {
   return (
     <div className="gallery__loading-indicator">
@@ -21,7 +27,11 @@ const renderImages = (props) => {
       props.posts.map(post => {
         return <div className="gallery__image-box">
           <a href={post.imageUrl} onClick={(e) => handleImageClicked(e, props, post.imageUrl)}>
-            <img className="gallery__image-box__picture" src={post.imageUrl} />
+            <div className="gallery__image-box__picture">
+              <img className="gallery__image-box__picture" src={post.imageUrl} />
+              <FontAwesome name="external-link" className="gallery__image-box__external-link" onClick={(e) => handleExternalLinkClicked(e, post.permalink)} />
+            </div>
+            
             <div className="gallery__image-box__caption">
               <span>[{post.score}]</span>
               {post.title}

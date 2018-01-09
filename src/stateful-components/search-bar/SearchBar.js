@@ -91,9 +91,13 @@ class SearchBar extends Component {
     return this.props.images.length === 0;
   }
 
+  loadingInitially() {
+    return this.props.isLoading && this.props.images.length === 0;
+  }
+
   render() {
     return (
-      !this.props.isLoading &&
+      !this.loadingInitially() &&
       <div className={`search-bar${this.galleryIsEmpty() ? '' : '--fixed'}`}>
        {
          !this.state.isCollapsed &&

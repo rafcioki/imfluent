@@ -24,6 +24,15 @@ $imageHeight: 400px;
       height: $imageHeight;
       margin-right: 2px;
       cursor: pointer;
+      position: relative;
+    }
+
+    &__external-link {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      color: white;
+      font-size: 1.5em;
     }
 
     &__caption {
@@ -57,6 +66,7 @@ $imageHeight: 400px;
     height: 100%;
     width: 100%;
     background-color: rgba(lightblue, 0.8);
+    z-index: 10000;
 
     &__image {
       width: auto;
