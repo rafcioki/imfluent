@@ -5,13 +5,25 @@ export const imagesReceived = (images) => {
   };
 }
 
-export function fetchImages() {
+export function requestImages() {
   return {
-    type: 'START_LOADING_IMAGES',
+    type: 'REQUEST_IMAGES'
   }
 }
 
-export function fetchMoreImages() {
+export function requestMoreImages() {
+  return {
+    type: 'REQUEST_MORE_IMAGES'
+  }
+}
+
+export function loadImages() {
+  return {
+    type: 'LOAD_IMAGES',
+  }
+}
+
+export function loadMoreImages() {
   return {
     type: 'LOAD_MORE_IMAGES',
   }

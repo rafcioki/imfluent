@@ -1,4 +1,5 @@
 import React from 'react';
+import FontAwesome from 'react-fontawesome';
 import styles from './gallery.css';
 
 function handleImageClicked(event, props, imageUrl) {
@@ -7,7 +8,11 @@ function handleImageClicked(event, props, imageUrl) {
 }
 
 const renderLoadingIndicator = () => {
-  return 'Currently loading!';
+  return (
+    <div className="gallery__loading-indicator">
+      <FontAwesome name='spinner' className="gallery__loading-indicator__spinner fa-spin" />
+    </div>
+  );
 }
 
 const renderImages = (props) => {
@@ -38,7 +43,7 @@ const renderPinnedImage = (props) => {
 const Gallery = (props) => {
   return [
       <div className='gallery'>
-        { props.isLoading ? renderLoadingIndicator() : renderImages(props) }
+        { props.isLoading && props.posts.length === 0 ? renderLoadingIndicator() : renderImages(props) }
       </div>,
       renderPinnedImage(props)
     ];

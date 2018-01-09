@@ -1,5 +1,19 @@
 import reducer from './imagesLoadingReducer';
-import { fetchImages, setOrderByFilter, setFromFilter, setSearchTerm }  from './imagesLoadingActions';
+import { loadImages, loadMoreImages, setOrderByFilter, setFromFilter, setSearchTerm }  from './imagesLoadingActions';
+
+it('should set loading indicator when intially loading images', () => {
+  const previousState = { isLoading: false, images: [] }
+
+  const stateAfterImagesLoadingTriggered = reducer(previousState, loadImages())
+  expect(stateAfterImagesLoadingTriggered.isLoading).toEqual(true)
+})
+
+it('should set loading indicator when loading more images', () => {
+  const previousState = { isLoading: false, images: ['url'] }
+  
+  const stateAfterMoreImagesLoadingTriggered = reducer(previousState, loadMoreImages())
+  expect(stateAfterMoreImagesLoadingTriggered.isLoading).toEqual(true)
+})
 
 it('should set order-by filter', () => {
   const previousState = { orderBy: 'top' };

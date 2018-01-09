@@ -8,7 +8,7 @@ const initialState = {
 
 export default function ImagesReducer(state = initialState, action) {
   switch (action.type) {
-    case 'START_LOADING_IMAGES':
+    case 'LOAD_IMAGES':
       return {
         ...state,
         isLoading: true,
@@ -26,7 +26,8 @@ export default function ImagesReducer(state = initialState, action) {
 
     case 'LOAD_MORE_IMAGES':
       return {
-        ...state
+        ...state,
+        isLoading: true,
       }
       
     case 'SET_ORDERBY_FILTER':

@@ -1,47 +1,79 @@
 import { put, takeLatest, call, select } from 'redux-saga/effects';
 import { getPosts } from 'reddit-images-api';
-import { fetchImages } from './imagesLoadingActions';
+import { loadImages, loadMoreImages } from './imagesLoadingActions';
 
-function* loadImages(action) {
-  const state = yield select()
+function* fetchImages(action) {
+  try {
+    const state = yield select()
+
+    const response = yield call(getPosts, state.images.subreddit, state.images.from, state.images.orderBy)
   
-  const response = yield call(getPosts, state.images.subreddit, state.images.from, state.images.orderBy)
-  
-  yield put({
-    type: 'RECEIVED_IMAGES',
-    images: response.posts,
-    lastPostId: response.lastPostId,
-    nextCount: response.nextCount
-  });
+    yield put({
+      type: 'RECEIVED_IMAGES',
+      images: response.posts,
+      lastPostId: response.lastPostId,
+      nextCount: response.nextCount
+    });
+  } catch (ex) {
+    console.error(ex)
+  }
 }
 
-function* loadMoreImages(action) {
-  const state = yield select();
+function* fetchMoreImages(action) {
+  try {
+    const state = yield select();
 
-  const response = yield call(getPosts, state.images.subreddit, state.images.from, state.images.orderBy, state.images.lastPostId, state.nextCount);
+    const response = yield call(getPosts, state.images.subreddit, state.images.from, state.images.orderBy, state.images.lastPostId, state.nextCount);
 
-  yield put({
-    type: 'RECEIVED_IMAGES',
-    images: response.posts,
-    lastPostId: response.lastPostId,
-    nextCount: response.nextCount
-  });
+    yield put({
+      type: 'RECEIVED_IMAGES',
+      images: response.posts,
+      lastPostId: response.lastPostId,
+      nextCount: response.nextCount
+    });
+  } catch (ex) {
+    console.error(ex)
+  }
 }
 
 function* triggerNewSearchIfImagesAreAlreadyLoaded(action) {
   const state = yield select()
 
   if (state.images.images.length > 0) {
-    yield put(fetchImages())
+    yield put(loadImages())
   }
 }
 
-export function* watchFetchImages() {
-  yield takeLatest('START_LOADING_IMAGES', loadImages);
+function* triggerLoadingImagesIfArentAlreadyLoading(action) {
+  const state = yield select() 
+
+  if (!state.images.isLoading) {
+    yield put(loadMoreImages())
+  }
 }
 
-export function* watchFetchMoreImages() {
-  yield takeLatest('LOAD_MORE_IMAGES', loadMoreImages);
+function* triggerLoadingMoreImagesIfArentAlreadyLoading(action) {
+  const state = yield select() 
+
+  if (!state.images.isLoading) {
+    yield put(loadMoreImages())
+  }
+}
+
+export function* watchRequestImages() {
+  yield takeLatest('REQUEST_IMAGES', triggerLoadingImagesIfArentAlreadyLoading);
+}
+
+export function* watchRequestMoreImages() {
+  yield takeLatest('REQUEST_MORE_IMAGES', triggerLoadingImagesIfArentAlreadyLoading);
+}
+
+export function* watchLoadImages() {
+  yield takeLatest('LOAD_IMAGES', fetchImages)
+}
+
+export function* watchLoadMoreImages() {
+  yield takeLatest('LOAD_MORE_IMAGES', fetchMoreImages)
 }
 
 export function* watchOrderByFilterSet() {

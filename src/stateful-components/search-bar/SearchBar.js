@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
-import { fetchImages, setOrderByFilter, setFromFilter, setSearchTerm } from '../../logic/imagesLoading/imagesLoadingActions';
+import { requestImages, setOrderByFilter, setFromFilter, setSearchTerm } from '../../logic/imagesLoading/imagesLoadingActions';
 import './searchBar.css';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    triggerSearch: () => dispatch(fetchImages()),
+    triggerSearch: () => dispatch(requestImages()),
     setOrderByFilter: (orderBy) => dispatch(setOrderByFilter(orderBy)),
     setFromFilter: (from) => dispatch(setFromFilter(from)),
     setSearchTerm: (subreddit) => dispatch(setSearchTerm(subreddit))

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchMoreImages } from '../../logic/imagesLoading/imagesLoadingActions';
+import { requestMoreImages } from '../../logic/imagesLoading/imagesLoadingActions';
 
 const BroadcastWhenLessPixelsLeft = 500;
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getMoreImages: () => dispatch(fetchMoreImages())
+    getMoreImages: () => dispatch(requestMoreImages())
   }
 }
 
