@@ -1,12 +1,24 @@
-export const imageClosed = () => {
+export const unpinImage = () => {
   return {
-    type: 'IMAGE_CLOSED'
+    type: 'UNPIN_IMAGE'
   }
 }
 
-export const imageClicked = (imageUrl) => {
+export const pinImage = (imageUrl) => {
   return {
-    type: 'IMAGE_CLICKED',
+    type: 'PIN_IMAGE',
     imageUrl
+  }
+}
+
+export const movePinnedImageLeft = () => {
+  return {
+    type: 'MOVE_PINNED_IMAGE_LEFT',
+  }
+}
+
+export const movePinnedImageRight = () => {
+  return {
+    type: 'MOVE_PINNED_IMAGE_RIGHT',
   }
 }

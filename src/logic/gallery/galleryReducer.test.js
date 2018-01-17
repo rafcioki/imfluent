@@ -14,4 +14,3 @@ it('should unpin an image after closing the pinned image', () => {
   const stateAfterClosing = reducer(previousState, imageClosed());
   expect(stateAfterClosing).toEqual({ isImagePinned: false, pinnedImageUrl: null });
 });
-

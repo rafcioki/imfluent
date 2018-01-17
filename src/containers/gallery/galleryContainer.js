@@ -1,20 +1,22 @@
 import { connect } from 'react-redux';
 import Gallery from '../../components/gallery/gallery'
-import { imageClicked, imageClosed } from '../../logic/gallery/galleryActions';
+import { pinImage, unpinImage, movePinnedImageLeft, movePinnedImageRight } from '../../logic/gallery/galleryActions';
 
 const mapStateToProps = (state) => {
   return {
     posts: state.images.images,
     isLoading: state.images.isLoading,
     isImagePinned: state.gallery.isImagePinned,
-    pinnedImageUrl: state.gallery.pinnedImageUrl
+    pinnedImageUrl: state.gallery.pinnedImageUrl,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    imageClicked: (imageUrl) => dispatch(imageClicked(imageUrl)),
-    imageClosed: () => dispatch(imageClosed())
+    pinImage: (imageUrl) => dispatch(pinImage(imageUrl)),
+    unpinImage: () => dispatch(unpinImage()),
+    movePinnedImageLeft: () => dispatch(movePinnedImageLeft()),
+    movePinnedImageRight: () => dispatch(movePinnedImageRight()),
   }
 }
 

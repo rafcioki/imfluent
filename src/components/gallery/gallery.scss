@@ -73,6 +73,24 @@ $imageHeight: 400px;
       max-width: 75vmax;
       max-height: 45vmax;
     }
+
+    &__arrow {
+      font-size: 2em;
+
+      &--right {
+        position: fixed;
+        right: 0;
+        font-size: 3em;
+        cursor: pointer;
+      }
+
+      &--left {
+        position: fixed;
+        left: 0;
+        font-size: 3em;
+        cursor: pointer;
+      }
+    }
   }
 
   &__loading-indicator {

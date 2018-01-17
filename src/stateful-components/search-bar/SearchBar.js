@@ -67,7 +67,6 @@ class SearchBar extends Component {
   }
 
   onSortByChange(e) {
-    console.log(e.target.value)
     this.props.setOrderByFilter(e.target.value)
   }
 

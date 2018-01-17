@@ -4,14 +4,14 @@ const initialState = {
 
 export default function GalleryReducer(state = initialState, action) {
   switch (action.type) {
-    case 'IMAGE_CLICKED':
+    case 'PIN_IMAGE':
       return {
         ...state,
         isImagePinned: true,
         pinnedImageUrl: action.imageUrl
       }
 
-    case 'IMAGE_CLOSED':
+    case 'UNPIN_IMAGE':
       return {
         ...state,
         isImagePinned: false,
