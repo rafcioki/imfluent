@@ -50,5 +50,11 @@ export function setSearchTerm(subreddit) {
   }
 }
 
+export function displayMoreImages() {
+  return {
+    type: 'DISPLAY_MORE_IMAGES',
+  }
+}
+
 
 

@@ -1,6 +1,7 @@
 const initialState = {
   isLoading: false,
   images: [],
+  hiddenImages: [],
   subreddit: null,
   orderBy: 'top',
   from: 'all',
@@ -21,7 +22,16 @@ export default function ImagesReducer(state = initialState, action) {
         isLoading: false,
         images: [...state.images, ...action.images],
         lastPostId: action.lastPostId,
-        nextCount: action.nextCount
+        nextCount: action.nextCount,
+      }
+
+    case 'RECEIVED_MORE_IMAGES':
+      return {
+        ...state,
+        isLoading: false,
+        hiddenImages: action.images,
+        lastPostId: action.lastPostId,
+        nextCount: action.nextCount,
       }
 
     case 'LOAD_MORE_IMAGES':
@@ -46,6 +56,13 @@ export default function ImagesReducer(state = initialState, action) {
       return {
         ...state,
         subreddit: action.subreddit
+      }
+
+    case 'DISPLAY_MORE_IMAGES':
+      return {
+        ...state,
+        images: [ ...state.images, ...state.hiddenImages ],
+        hiddenImages: []
       }
 
     default:

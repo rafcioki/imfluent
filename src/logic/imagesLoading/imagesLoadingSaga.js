@@ -26,7 +26,7 @@ function* fetchMoreImages(action) {
     const response = yield call(getPosts, state.images.subreddit, state.images.from, state.images.orderBy, state.images.lastPostId, state.nextCount);
 
     yield put({
-      type: 'RECEIVED_IMAGES',
+      type: 'RECEIVED_MORE_IMAGES',
       images: response.posts,
       lastPostId: response.lastPostId,
       nextCount: response.nextCount
@@ -48,7 +48,7 @@ function* triggerLoadingImagesIfArentAlreadyLoading(action) {
   const state = yield select() 
 
   if (!state.images.isLoading) {
-    yield put(loadMoreImages())
+    yield put(loadImages())
   }
 }
 
@@ -65,7 +65,7 @@ export function* watchRequestImages() {
 }
 
 export function* watchRequestMoreImages() {
-  yield takeLatest('REQUEST_MORE_IMAGES', triggerLoadingImagesIfArentAlreadyLoading);
+  yield takeLatest('REQUEST_MORE_IMAGES', triggerLoadingMoreImagesIfArentAlreadyLoading);
 }
 
 export function* watchLoadImages() {

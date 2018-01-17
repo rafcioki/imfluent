@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { requestMoreImages } from '../../logic/imagesLoading/imagesLoadingActions';
+import { requestMoreImages, displayMoreImages } from '../../logic/imagesLoading/imagesLoadingActions';
 
-const BroadcastWhenLessPixelsLeft = 500;
+const BroadcastWhenScrolledScreenPercentage = 30;
+
+const mapStateToProps = (state) => {
+  return {
+    hiddenImages: state.images.hiddenImages,
+    isLoading: state.images.isLoading,
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getMoreImages: () => dispatch(requestMoreImages())
+    getMoreImages: () => dispatch(requestMoreImages()),
+    displayMoreImages: () => dispatch(displayMoreImages()),
   }
 }
 
@@ -28,8 +36,14 @@ class Scroller extends Component {
   handleScroll(event) {
     console.log(`scrolling! ${window.innerHeight + window.scrollY >= document.body.offsetHeight}`);
 
+    const scrolledIntoInPercentage = ((window.innerHeight + window.scrollY) / document.body.offsetHeight) * 100
+
+    if (scrolledIntoInPercentage > BroadcastWhenScrolledScreenPercentage && this.props.hiddenImages.length === 0 && !this.props.isLoading) {
+      this.props.getMoreImages()
+    }
+
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      this.props.getMoreImages();
+      this.props.displayMoreImages();
     }
   }
 
@@ -38,4 +52,4 @@ class Scroller extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Scroller);
+export default connect(mapStateToProps, mapDispatchToProps)(Scroller);
