@@ -106,10 +106,10 @@ class SearchBar extends Component {
               <button className="search-bar__search-button" type="submit">Search</button>
             </form>
             
-            <SortingOptions title="Order by" onChangeCallback={this.onSortByChange} options={this.state.sortByOptions} />
+            <SortingOptions title="Order by" onChangeCallback={this.onSortByChange} options={this.state.sortByOptions} selected={this.props.orderBy}/>
             
             { this.props.orderBy === 'top' &&
-              <SortingOptions title="From" onChangeCallback={this.onFromChange} options={this.state.fromOptions} />
+              <SortingOptions title="From" onChangeCallback={this.onFromChange} options={this.state.fromOptions} selected={this.props.from} />
             }
           </div>
        }
@@ -126,14 +126,14 @@ class SearchBar extends Component {
   }
 }
 
-const SortingOptions = ({title, onChangeCallback, options}) => {
+const SortingOptions = ({title, onChangeCallback, options, selected}) => {
   return (
     <div className="search-bar__options">
       <span className="search-bar__order-by">{title}:</span>
-      <select onChange={onChangeCallback}>
+      <select onChange={onChangeCallback} value={selected}> 
         { 
           options.map(option => {
-            return <option value={option}>{ option }</option>
+            return <option  value={option}>{ option }</option>
           })
         }
       </select>

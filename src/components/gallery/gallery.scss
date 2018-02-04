@@ -72,6 +72,14 @@ $imageHeight: 400px;
       width: auto;
       max-width: 75vmax;
       max-height: 45vmax;
+      user-select: none;
+
+      @media screen and (max-width: 400px) {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+      }
     }
 
     &__arrow {

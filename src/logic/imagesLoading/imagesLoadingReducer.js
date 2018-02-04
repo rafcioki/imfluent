@@ -29,7 +29,7 @@ export default function ImagesReducer(state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        hiddenImages: action.images,
+        hiddenImages: [...state.hiddenImages, ...action.images],
         lastPostId: action.lastPostId,
         nextCount: action.nextCount,
       }
